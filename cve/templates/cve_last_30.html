@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}
+GET THE LAST UPDATED CVES
+{% endblock %}
+{% block content %}
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Published</th>
+            <th>CVE#</th>
+            <th>Summary</th>
+            <th>References</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for d in data %}
+        <tr>
+            <td>
+                {{ d.Published }}
+            </td>
+            <td>
+                {{ d.id }}
+            </td>
+            <td>
+
+                {{ d.summary }}
+            </td>
+            <td>
+                <ul>
+                    {% for reference in d.references %}
+                    <li class="text-left">
+
+                        <a href="{{reference}}" target="_blank">{{reference}}</a>
+
+                    </li>
+                    {% endfor %}
+                </ul>
+
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

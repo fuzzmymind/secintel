@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <!-- A grey horizontal navbar that becomes vertical on small screens -->
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <a class="navbar-brand" href="#">Security Intel</a>
+    <!-- Links -->
+    <ul class="navbar-nav">
+      <!-- Dropdown -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+          CVE
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="/">GET CVE PER CVE-ID</a>
+          <a class="dropdown-item" href="/cve/last">GET THE LAST UPDATED CVES</a>
+          <a class="dropdown-item" href="#">BROWSE CVES PER VENDOR/PRODUCT</a>
+        </div>
+      </li>
+    </ul>
+
+  </nav>
+  
+  <div class="jumbotron text-center">
+    <h1 class="text-primary">{% block title %}{% endblock %}</h1>
+    <p class="text-muted">Thanks to the good folks at cve.circl.lu</p>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        {% block content %}
+          {% endblock %}
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
