@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}
+BROWSE CVES PER VENDOR/PRODUCT
+{% endblock %}
+{% block content %}
+<form action="/cve/product/" method="post">
+    {% csrf_token %}
+    <select name="selectvendor" id="selectvendor">
+        {% for item in vendors %}
+        <option val="{{ item }}"> {{ item }} </option>
+        {% endfor %}
+    </select>
+    <select name="selectproduct" id="selectproduct">
+    </select>
+    <input type="submit" value="Submit" class="btn-primary">
+</form>
+
+<script>
+    $(document).ready(function () {
+        $('select#selectvendor').change(function () {
+            var optionSelected = $(this).find("option:selected");
+            var valueSelected = optionSelected.val();
+            var vendor_name = optionSelected.text();
+            var url = '/cve/getproducts?vendor=' + vendor_name.trim()
+            $.get(url, function (result) {
+                $("#selectproduct option").remove();
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $("#selectproduct").append('<option>' + result[i].name + '</option>');
+                };
+            });
+        });
+    });
+</script>
+<h2>Summary</h2>
+<p>{{ data.summary }}</p>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>References</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                {% for reference in data.references %}
+                <a href="{{reference}}" target="_blank">{{reference}}</a>
+                {% endfor %}
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+{% endblock %}

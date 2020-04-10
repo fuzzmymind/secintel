@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse
-from .forms import CveSearchForm
+import json
+from .forms import CveSearchForm, CveProductForm
 import pip._vendor.requests as requests
 
 # Create your views here.
@@ -30,7 +31,30 @@ def cve_search(request):
 
 
 def cve_product(request):
-    return HttpResponse("Product page")
+    # if this is a POST request we need to process the form data
+    if request.method == 'GET':
+        r = requests.get('http://cve.circl.lu/api/browse/')
+        data = r.json()["vendor"]
+            
+    context = {
+        'vendors': data
+    }
+    return render(request, 'cve_product.html', context)
+
+
+def get_cve_product_vendor(request):
+    pass
+
+
+def get_product_for_vendor(request):
+    vendor_name = request.GET["vendor"]
+    products = []
+    result = []
+    r = requests.get('http://cve.circl.lu/api/browse/' + vendor_name)
+    products = r.json()["product"]
+    for product in products:
+        result.append({"name": product})
+    return HttpResponse(json.dumps(result),content_type='application/json')
 
 
 def cve_last_30(request):
