@@ -1,41 +1,18 @@
 {% extends "base.html" %}
 
 {% block title %}
-BROWSE CVES PER VENDOR/PRODUCT
+Analyze URL
 {% endblock %}
 {% block subtitle %}
-Thanks to the good folks at cve.circl.lu
+Powered by VirusTotal
 {% endblock %}
 {% block content %}
-<form action="/cve/product/" method="POST" id="post-form">
+<form action="/url/analyze/" method="POST" id="post-form">
     {% csrf_token %}
-    <select name="selectvendor" id="selectvendor">
-        {% for item in vendors %}
-        <option val="{{ item }}"> {{ item }} </option>
-        {% endfor %}
-    </select>
-    <select name="selectproduct" id="selectproduct">
-
-    </select>
-    <input type="submit" value="Submit" id="btnSubmit" class="btn-primary">
+    {{ form }}
+    <input type="text" id="txtUrl">
+    <input type="submit" value="Submit" class="btn-primary">
 </form>
-<div class="spinner-border text-primary" role="status" id="spinner">
-    <span class="sr-only">Loading...</span>
-  </div>
-<div id="results">
-    <table id="mytable" class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>Published</th>
-                <th>CVE#</th>
-                <th>Summary</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-        <table></table>
-</div>
-
 <script>
     $(function () {
 
@@ -93,56 +70,27 @@ Thanks to the good folks at cve.circl.lu
 
     });
     $(document).ready(function () {
-        $('#spinner').hide()
         $('#post-form').on('submit', function (event) {
             event.preventDefault();
             create_post();
         });
         function create_post() {
-            $('#spinner').show()
             $.ajax({
-                url: "/cve/getcvebyproduct", // the endpoint
+                url: "/url/analyze/", // the endpoint
                 type: "POST", // http method
                 data: {
-                    'vendor': $('#selectvendor').val(),
-                    'product': $('#selectproduct').val()
+                    'url': $('#txtUrl').val()
                 }, // data sent with the post request
-
                 // handle a successful response
-                success: function (obj) {
-                    for (var i = 0; i < obj.length; i++) {
-                        var tr = "<tr>";
-                        var td1 = "<td>" + obj[i]["Published"] + "</td>";
-                        var td2 = "<td>" + obj[i]["id"] + "</td>";
-                        var td3 = "<td>" + obj[i]["summary"] + "</td></tr>";
-
-                        $("#mytable").append(tr + td1 + td2 + td3);
-
-                    }
-                    $('#spinner').hide()
+                success: function (result) {
+                    console.log(result)
                 },
-
                 // handle a non-successful response
                 error: function (xhr, errmsg, err) {
                     console.log('error');
                 }
             });
         };
-        $('select#selectvendor').change(function () {
-            $('#spinner').show()
-            var optionSelected = $(this).find("option:selected");
-            var valueSelected = optionSelected.val();
-            var vendor_name = optionSelected.text();
-            var url = '/cve/getproducts?vendor=' + vendor_name.trim()
-            $.get(url, function (result) {
-                $("#selectproduct option").remove();
-                for (var i = result.length - 1; i >= 0; i--) {
-                    $("#selectproduct").append('<option>' + result[i].name + '</option>');
-                };
-                $('#spinner').hide()
-            });
-        });
     });
 </script>
-
 {% endblock %}

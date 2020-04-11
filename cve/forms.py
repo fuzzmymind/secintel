@@ -1,10 +1,5 @@
 from django import forms
 
-VENDOR = [
-    ('Microsoft', 'Microsoft'),
-    ('Google', 'Google'),
-]
-
 class CveSearchForm(forms.Form):
     cve = forms.CharField(label='')
 

@@ -31,19 +31,32 @@ def cve_search(request):
 
 
 def cve_product(request):
+    data = ''
+    cveinfo = {}
     # if this is a POST request we need to process the form data
     if request.method == 'GET':
         r = requests.get('http://cve.circl.lu/api/browse/')
         data = r.json()["vendor"]
-            
+    
     context = {
-        'vendors': data
+        'vendors': data,
+        'data': cveinfo
     }
     return render(request, 'cve_product.html', context)
 
 
 def get_cve_product_vendor(request):
-    pass
+    vendor = request.POST.get('vendor')
+    product = request.POST.get('product')
+    r = requests.get('http://cve.circl.lu/api/search/'+vendor+'/'+product)
+    cveinfo = r.json()["results"]
+    context = {
+        'data': cveinfo
+    }
+    return HttpResponse(
+            json.dumps(cveinfo),
+            content_type="application/json"
+        )
 
 
 def get_product_for_vendor(request):

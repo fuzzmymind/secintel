@@ -3,6 +3,9 @@
 {% block title %}
 GET CVE PER CVE-ID
 {% endblock %}
+{% block subtitle %}
+Thanks to the good folks at cve.circl.lu
+{% endblock %}
 {% block content %}
 <form action="/" method="post">
     {% csrf_token %}

@@ -28,20 +28,28 @@
           <a class="dropdown-item" href="/cve/product">BROWSE CVES PER VENDOR/PRODUCT</a>
         </div>
       </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+          Indicators
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="/url">URL</a>
+        </div>
+      </li>
     </ul>
 
   </nav>
-  
+
   <div class="jumbotron text-center">
     <h1 class="text-primary">{% block title %}{% endblock %}</h1>
-    <p class="text-muted">Thanks to the good folks at cve.circl.lu</p>
+    <p class="text-muted">{% block subtitle %}{% endblock %}</p>
   </div>
 
   <div class="container">
     <div class="row">
       <div class="col-md-12 text-center">
         {% block content %}
-          {% endblock %}
+        {% endblock %}
       </div>
     </div>
   </div>
