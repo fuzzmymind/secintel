@@ -9,4 +9,21 @@ Powered by VirusTotal
 {% block content %}
 {% load static %}
 <script src="{% static "indicators/main.js" %}"></script>
+<input type="text">
+<button type="button" class="btn-primary" id="btnSubmit">Submit</button>
+<br>
+<div class="spinner-border text-primary" role="status" id="spinner">
+    <span class="sr-only">Loading...</span>
+</div>
+<div id="divResults">
+
+</div>
+<script>
+    $(document).ready(function () {
+        $('#spinner').hide();
+        $('#btnSubmit').on('click', function (event) {
+            alert('Hoorah');
+        });
+    });
+</script>
 {% endblock %}

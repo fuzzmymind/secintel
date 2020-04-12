@@ -1,7 +1,4 @@
 $(function () {
-
-    console.log('Static works');
-
     // This function gets cookie with a given name
     function getCookie(name) {
         var cookieValue = null;

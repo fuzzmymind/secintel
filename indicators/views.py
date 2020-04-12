@@ -27,6 +27,11 @@ def url_analyze(request):
 )
 
 
-def domain_analyze(request):
-    context = None
+def domain_home(request):
+    context = {
+        'data': [
+            "1",
+            "2"
+        ]
+    }
     return render(request, 'analyze_domain.html', context)
