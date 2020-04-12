@@ -70,27 +70,68 @@ Powered by VirusTotal
 
     });
     $(document).ready(function () {
+        $('#divNotFound').hide()
+        $('#spinner').hide();
+        $('#tblResults').hide();
         $('#post-form').on('submit', function (event) {
             event.preventDefault();
             create_post();
         });
         function create_post() {
+            $('#spinner').show();
+            $('#divNotFound').hide();
+            $('#tblResults tbody').empty();
             $.ajax({
                 url: "/url/analyze/", // the endpoint
                 type: "POST", // http method
                 data: {
-                    'url': $('#txtUrl').val()
+                    'url': btoa($('#txtUrl').val())
                 }, // data sent with the post request
                 // handle a successful response
                 success: function (result) {
-                    console.log(result)
+                    if (result.constructor == Object) {
+                        $('#tblResults').show();
+                        var dictionary = result.data.attributes.last_analysis_results;
+                        var tbody = $('#tblResults tbody');
+                        for (var key in dictionary) {
+                            // check if the property/key is defined in the object itself, not in parent
+                            if (dictionary.hasOwnProperty(key)) {
+                                var tr = $('<tr>');
+                                $('<td>').html(dictionary[key].engine_name).appendTo(tr);
+                                $('<td>').html(dictionary[key].category).appendTo(tr);
+                                tbody.append(tr);
+                            }
+                        }
+                    }
+                    else {
+                        $('#divNotFound').show();
+                    }
+
+                    $('#spinner').hide()
                 },
                 // handle a non-successful response
                 error: function (xhr, errmsg, err) {
                     console.log('error');
+                    $('#spinner').hide()
                 }
             });
         };
     });
 </script>
+<div class="spinner-border text-primary" role="status" id="spinner">
+    <span class="sr-only">Loading...</span>
+</div>
+<div class="alert alert-primary" role="alert" id="divNotFound">
+    No results found :(
+</div>
+<table class="table table-bordered table-striped" id="tblResults">
+    <thead>
+        <tr>
+            <th>Engine Name</th>
+            <th>Category</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
 {% endblock %}

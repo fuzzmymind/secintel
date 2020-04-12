@@ -1,4 +1,0 @@
-[
-    {'Modified': '2019-10-09T23: 24: 00', 'Published': '2018-06-07T02: 29: 00', 'access': {'authentication': 'NONE', 'complexity': 'LOW', 'vector': 'NETWORK'
-        }, 'assigner': 'cve@mitre.org', 'cvss': 5.0, 'cvss-time': '2019-10-09T23: 24: 00', 'cvss-vector': 'AV:N/AC:L/Au:N/C:P/I:N/A:N', 'cwe': 'CWE-22', 'id': 'CVE-2017-16160', 'impact': {'availability': 'NONE', 'confidentiality': 'PARTIAL', 'integrity': 'NONE'
-        }, 'references': ['https: //github.com/JacksonGL/NPM-Vuln-PoC/blob/master/directory-traversal/11xiaoli', 'https://nodesecurity.io/advisories/395'], 'summary': '11xiaoli is a simple file server. 11xiaoli is vulnerable to a directory traversal issue, giving an attacker access to the filesystem by placing "../" in the url.', 'vulnerable_configuration': ['cpe:2.3:a:11xiaoli_project:11xiaoli:1.1.0:*:*:*:*:node.js:*:*'], 'vulnerable_configuration_cpe_2_2': [], 'vulnerable_product': ['cpe:2.3:a:11xiaoli_project:11xiaoli:1.1.0:*:*:*:*:node.js:*:*']}]
