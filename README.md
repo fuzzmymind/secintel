@@ -8,5 +8,11 @@ Activate it
 
 pip install -r requirements.txt
 
+Create .env file under secintel folder
+
+with your VirusTotal api key like this
+
+VT_API_KEY="YOUR KEY GOES HERE"
+
 python manage.py runserver <PORT>
 
