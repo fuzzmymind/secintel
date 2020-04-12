@@ -25,3 +25,8 @@ def url_analyze(request):
         result = "No data found"
     return HttpResponse(json.dumps(result), content_type="application/json"
 )
+
+
+def domain_analyze(request):
+    context = None
+    return render(request, 'analyze_domain.html', context)

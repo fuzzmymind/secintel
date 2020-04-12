@@ -81,8 +81,9 @@ Powered by VirusTotal
             $('#spinner').show();
             $('#divNotFound').hide();
             $('#tblResults tbody').empty();
+            $('#tblResults').hide();
             $.ajax({
-                url: "/url/analyze/", // the endpoint
+                url: "/indicators/url/", // the endpoint
                 type: "POST", // http method
                 data: {
                     'url': btoa($('#txtUrl').val())
